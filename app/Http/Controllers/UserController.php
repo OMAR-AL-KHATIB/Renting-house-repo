@@ -16,14 +16,27 @@ class UserController extends Controller
             'phone_number'=>'required|string|max:255',
             'password'=>'required|string|max:255|confirmed',
             'born_date'=>'required|max:255|date',
-        ]);
+            'id_image'=>'required|max:2048|mimes:png,jpg,gif,jpeg|image',
+            'profile_image'=>'required|max:2048|mimes:png,jpg,gif,jpeg|image'
+            ]);
+        if($request->hasFile('id_image')){
+            $path=$request->file('id_image')->getClientOriginalName();
+            request()->file('id_image')->storeAs('avatars', $path, 'public');
+        }
+        if($request->hasFile('profile_image')){
+            $path2=$request->file('profile_image')->getClientOriginalName();
+            request()->file('profile_image')->storeAs('avatars', $path2, 'public');
+        }
         $user=User::create([
             'first_name'=>$request->first_name,
             'last_name'=>$request->last_name,
             'phone_number'=>$request->phone_number,
             'password'=>Hash::make($request->password),
             'born_date'=>$request->born_date,
+            'id_image'=>$path,
+            'profile_image'=>$path2
         ]);
+
         return response()->json([
             'message'=>'user registerd successfully',
             'user'=>$user
@@ -34,11 +47,12 @@ class UserController extends Controller
             'phone_number'=>'required',
             'password'=>'required',
         ]);
+
+        if(!Auth::attempt($request->only('phone_number','password')))
+            return response()->json([
+                'messege'=>'invalid phone number or password'
+            ],401);
     $user=User::where('phone_number',$request->phone_number)->FirstOrFail();
-    if(!Auth::attempt($request->only('phone_number','password')))
-        return response()->json([
-            'messege'=>'invalid phone number or password'
-        ],401);
 $token=$user->createToken('auth_Token')->plainTextToken;
 return response()->json(
     ['messege'=>'login successfully'
