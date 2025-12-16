@@ -13,7 +13,7 @@ class AvailableHouseController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -49,9 +49,16 @@ $house = Available_Houses::create($validatedata);
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $vlaidatedata=$request->validate([
+        'is_available'=>'required|boolean',
+        'expire_at'=>'nullable|required_if:is_available,true|date'
+        ]);
+        $user_id=Auth::user()->id;
+        $validatedata['user_id']=$user_id;
+        $new_house_state=Available_Houses::update($vlaidatedata);
+        return response()->json($new_house_state,201);
     }
 
     /**
