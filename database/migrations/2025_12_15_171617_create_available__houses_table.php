@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('houses', function (Blueprint $table) {
+        Schema::create('available__houses', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_available');
+            $table->dateTime('expire_at');
             $table->string('address');
-            $table->string('description');
-            $table->integer('price');
+            $table->string('details');
+            $table->string('image');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('houses');
+        Schema::dropIfExists('available__houses');
     }
 };
