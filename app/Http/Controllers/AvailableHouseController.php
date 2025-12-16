@@ -31,8 +31,8 @@ class AvailableHouseController extends Controller
         ]);
 $validatedata['user_id']=$user_id;
 if($request->hasFile('image'))
-    $path=$request->file('image')->getClientOriginalName();
-request()->file('image')->storeAs('avatars',$path,'public');
+    $path=$request->File('image')->getClientOriginalName();
+request()->File('image')->storeAs('avatars',$path,'public');
 $validatedata['image']=$path;
 $house = Available_Houses::create($validatedata);
     return response()->json($house,201);

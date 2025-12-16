@@ -20,12 +20,12 @@ class UserController extends Controller
             'profile_image'=>'required|max:2048|mimes:png,jpg,gif,jpeg|image'
             ]);
         if($request->hasFile('id_image')){
-            $path=$request->file('id_image')->getClientOriginalName();
-            request()->file('id_image')->storeAs('avatars', $path, 'public');
+            $path=$request->File('id_image')->getClientOriginalName();
+            request()->File('id_image')->storeAs('avatars', $path, 'public');
         }
         if($request->hasFile('profile_image')){
-            $path2=$request->file('profile_image')->getClientOriginalName();
-            request()->file('profile_image')->storeAs('avatars', $path2, 'public');
+            $path2=$request->File('profile_image')->getClientOriginalName();
+            request()->File('profile_image')->storeAs('avatars', $path2, 'public');
         }
         $user=User::create([
             'first_name'=>$request->first_name,
@@ -58,5 +58,18 @@ return response()->json(
     ['messege'=>'login successfully'
         ,'user'=>$user
         , 'token'=>$token],201);
+    }
+    public function update(Request $request){
+        $validatedata=$request->validate([
+            'first_name'=>'nuallable|string|max:255',
+            'last_name'=>'nullable|string|max:255',
+            'profile_image'=>'nullable|max:2048|mimes:png,jpg,gif,jpeg|image'
+        ]);
+        if($request->hasFile('profile_image'))
+        $path=$request->File('profile_image')->getClientOriginalName();
+        request()->File('profile_image')->storeAs('avatars', $path ,'public');
+        $validatedata['profile_image']=$path;
+        $new_user=User::update($validatedata);
+        return response()->json($new_user,201);
     }
 }
