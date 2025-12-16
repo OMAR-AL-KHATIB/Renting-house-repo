@@ -72,4 +72,7 @@ return response()->json(
         $new_user=User::update($validatedata);
         return response()->json($new_user,201);
     }
+    public function show(Request $request){
+        $validatedate=$request->
+    }
 }
