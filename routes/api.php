@@ -9,7 +9,9 @@ Route::get('/user', function (Request $request) {
 Route::post('/register',[\App\Http\Controllers\UserController::class,'register']);
 Route::post('/login',[\App\Http\Controllers\UserController::class,'login']);
 Route::put('/update',[\App\Http\Controllers\UserController::class,'update']);
-Route::get('/show',[\App\Http\Controllers\UserController::class,'show'])->middleware('auth:sanctum');
+Route::get('/show',[\App\Http\Controllers\UserController::class,'show']);
+Route::get('/showAll',[\App\Http\Controllers\UserController::class,'index']);
+
 
 Route::apiResource('house',\App\Http\Controllers\AvailableHouseController::class)->middleware('auth:sanctum');
 

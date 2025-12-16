@@ -72,7 +72,12 @@ return response()->json(
         $new_user=User::update($validatedata);
         return response()->json($new_user,201);
     }
-    public function show(Request $request){
-        $validatedate=$request->
-    }
+    public function show($id){
+        $user=User::find($id);
+   return response()->json($user,200);
+     }
+     public function index(){
+$user=User::all();
+return response()->json($user,200);
+     }
 }
