@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_available');
             $table->dateTime('expire_at');
-            $table->string('address');
+            $table->string('government');
+            $table->string('city');
             $table->string('details');
+            $table->integer('price');
             $table->string('image');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();

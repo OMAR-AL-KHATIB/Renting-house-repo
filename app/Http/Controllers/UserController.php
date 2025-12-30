@@ -76,8 +76,14 @@ return response()->json(
         $user=User::find($id);
    return response()->json($user,200);
      }
-     public function index(){
-$user=User::all();
-return response()->json($user,200);
+     public function index()
+     {
+         $user = User::all();
+         return response()->json($user, 200);
+
+     }
+     public function logout(Request $request){
+        $request->user()->currentAccessToken()->delete();
+            return response()->json('messege=>logout successfully');
      }
 }
