@@ -11,4 +11,7 @@ protected $guarded;
 public function house(){
         return $this->belongsTo(Available_Houses::class);
  }
+ public function user(){
+        return $this->belongsTo(Available_Houses::class);
+ }
 }

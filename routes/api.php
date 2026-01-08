@@ -3,15 +3,14 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::get('/user', function (Request $request) {return $request->user();})->middleware('auth:sanctum');
 Route::post('/register',[\App\Http\Controllers\UserController::class,'register']);
 Route::post('/logIn',[\App\Http\Controllers\UserController::class,'login']);
 Route::post('/logOut',[\App\Http\Controllers\UserController::class,'logout'])->middleware('auth:sanctum');
 Route::put('/update',[\App\Http\Controllers\UserController::class,'update']);
 Route::get('/show',[\App\Http\Controllers\UserController::class,'show']);
 Route::get('/showAll',[\App\Http\Controllers\UserController::class,'index']);
+Route::get('/userReservations',[\App\Http\Controllers\UserController::class,'getUserReservations'])->middleware('auth:sanctum');
 
 
 

@@ -50,5 +50,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
+    public function states(){
+        return $this->hasMany(House_State::class);
+    }
 }

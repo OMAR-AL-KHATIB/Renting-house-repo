@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('house__states', function (Blueprint $table) {
             $table->id();
             $table->foreignId('available_houses_id')->constrained('available_houses')->cascadeOnDelete();
+            $table->foreignId('users_id')->constrained('users')->cascadeOnDelete();
             $table->boolean('state');
             $table->date('start_time');
             $table->date('end_time');

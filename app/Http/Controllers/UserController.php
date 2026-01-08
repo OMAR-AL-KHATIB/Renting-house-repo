@@ -86,4 +86,13 @@ return response()->json(
         $request->user()->currentAccessToken()->delete();
             return response()->json('messege=>logout successfully');
      }
+    public function getUserReservations(Request $request){
+        $user_id=Auth::user()->id;
+        $validation=$request->validate(['user_id:required|exists:users,id']);
+        $validation['user_id']=$user_id;
+
+        $reservations=User::findOrFail($validation)->states;
+        return response()->json($reservations,201);
+    }
+
 }
