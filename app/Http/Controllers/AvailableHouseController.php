@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Available_Houses;
+use App\Models\House_State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,15 +63,7 @@ $house = Available_Houses::create($validatedata);
 
     public function update(Request $request)
     {
-        $vlaidatedata=$request->validate([
-        'is_available'=>'required|boolean',
-        'expire_at'=>'nullable|required_if:is_available,true|date'
-        ]);
-        $user_id=Auth::user()->id;
-        $validatedata['user_id']=$user_id;
-        $new_house_state=Available_Houses::update($vlaidatedata);
-        return response()->json($new_house_state,201);
-    }
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -105,8 +98,10 @@ $details=$request->input('details');
 
     }
 
+
     public function destroy(string $id)
     {
 
     }
+
 }

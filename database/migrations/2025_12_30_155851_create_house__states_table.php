@@ -11,23 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('available__houses', function (Blueprint $table) {
+        Schema::create('house__states', function (Blueprint $table) {
             $table->id();
-            $table->string('government');
-            $table->string('city');
-            $table->string('details');
-            $table->integer('price');
-            $table->string('image');
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('available_houses_id')->constrained('available_houses')->cascadeOnDelete();
+            $table->boolean('state');
+            $table->date('start_time');
+            $table->date('end_time');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('available__houses');
+        Schema::dropIfExists('house__states');
     }
 };
