@@ -27,16 +27,18 @@ class UserController extends Controller
             $path2=$request->File('profile_image')->getClientOriginalName();
             request()->File('profile_image')->storeAs('avatars', $path2, 'public');
         }
-        $user=User::create([
-            'first_name'=>$request->first_name,
-            'last_name'=>$request->last_name,
-            'phone_number'=>$request->phone_number,
-            'password'=>Hash::make($request->password),
-            'born_date'=>$request->born_date,
-            'id_image'=>$path,
-            'profile_image'=>$path2
-        ]);
-
+$validation=$request->validate(['admin_acception'=>'required|boolean']);
+        if($validation) {
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'phone_number' => $request->phone_number,
+                'password' => Hash::make($request->password),
+                'born_date' => $request->born_date,
+                'id_image' => $path,
+                'profile_image' => $path2
+            ]);
+        }
         return response()->json([
             'message'=>'user registerd successfully',
             'user'=>$user

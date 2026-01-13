@@ -28,25 +28,27 @@ public function filtered_houses(Request $request)
      */
     public function store(Request $request)
     {
-        $user_id=Auth::user()->id;
-        $validatedata=$request->validate([
-            'city'=>'string|required',
-            'price'=>'integer|required',
-            'is_available'=>'required|boolean',
-            'expire_at'=>'nullable|required_if:is_available,true|date',
-            'government'=>'string|required',
-            'details'=>'string|nullable',
-            'image'=>'image|required|mimes:png,jpeg,jpg,gif'
+        $user_id = Auth::user()->id;
+        $validatedata = $request->validate([
+            'city' => 'string|required',
+            'price' => 'integer|required',
+            'is_available' => 'required|boolean',
+            'expire_at' => 'nullable|required_if:is_available,true|date',
+            'government' => 'string|required',
+            'details' => 'string|nullable',
+            'image' => 'image|required|mimes:png,jpeg,jpg,gif',
+            'admin_acception' => 'required|boolean'
         ]);
-$validatedata['user_id']=$user_id;
-if($request->hasFile('image'))
-    $path=$request->File('image')->getClientOriginalName();
-request()->File('image')->storeAs('avatars',$path,'public');
-$validatedata['image']=$path;
-$house = Available_Houses::create($validatedata);
-    return response()->json($house,201);
+        $validatedata['user_id'] = $user_id;
+        if ($request->hasFile('image'))
+            $path = $request->File('image')->getClientOriginalName();
+        request()->File('image')->storeAs('avatars', $path, 'public');
+        $validatedata['image'] = $path;
+        if ($validatedata['admin_acception'] == true) {
+            $house = Available_Houses::create($validatedata);
+            return response()->json($house, 201);
+        }
     }
-
     /**
      * Display the specified resource.
      */

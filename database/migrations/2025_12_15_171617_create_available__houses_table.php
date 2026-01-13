@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('price');
             $table->string('image');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->boolean('admin_acception');
             $table->timestamps();
         });
     }
